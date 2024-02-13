@@ -1,4 +1,6 @@
-const result = document.getElementById("result");
+const hr = document.getElementById("hr");
+const min = document.getElementById("min");
+const sec = document.getElementById("secs");
 
 async function getPackages() {
   const response = await fetch(
@@ -18,19 +20,21 @@ async function logTime() {
   const date = new Date(first.package.date);
   const since = Date.now() - date.getTime();
 
-  result.innerText = `${formatTime(since / 1000)}`;
+  formatTime(since / 1000);
 }
 
 function formatTime(seconds) {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
-  const secs = (seconds % 60).toFixed(2);
+  const secs = (seconds % 60).toFixed(0);
 
-  paddedHours = hours > 10 ? hours.toString() : "0" + hours.toString();
-  paddedMinutes = minutes > 10 ? minutes.toString() : "0" + minutes.toString();
-  paddedSeconds = secs > 10 ? secs.toString() : "0" + secs.toString();
+  paddedHours = hours >= 10 ? hours.toString() : "0" + hours.toString();
+  paddedMinutes = minutes >= 10 ? minutes.toString() : "0" + minutes.toString();
+  paddedSeconds = secs >= 10 ? secs.toString() : "0" + secs.toString();
 
-  return `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
+  hr.innerText = paddedHours;
+  min.innerText = paddedMinutes;
+  sec.innerText = paddedSeconds;
 }
 
 setInterval(() => {
