@@ -1,3 +1,5 @@
+const result = document.getElementById("result");
+
 async function getPackages() {
   const response = await fetch(
     "https://registry.npmjs.com/-/v1/search?text=framework&size=250",
@@ -16,7 +18,7 @@ async function logTime() {
   const date = new Date(first.package.date);
   const since = Date.now() - date.getTime();
 
-  console.log(`${formatTime(since / 1000)}`);
+  result.innerText = `${formatTime(since / 1000)}`;
 }
 
 function formatTime(seconds) {
