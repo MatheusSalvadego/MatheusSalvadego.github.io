@@ -1,3 +1,5 @@
+const times = document.getElementById("frameworks");
+
 const hr = document.getElementById("hr");
 const min = document.getElementById("min");
 const sec = document.getElementById("secs");
@@ -8,15 +10,31 @@ async function getPackages() {
   );
   const data = await response.json();
   const { objects } = data;
-  const [first] = objects.sort((a, b) =>
-    b.package.date.localeCompare(a.package.date),
-  );
 
-  return first;
+  return objects;
+}
+
+async function getPackagesCreatedToday() {}
+
+async function logPackageCount() {
+  const objects = await getPackages();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const packagesCreatedToday = objects.filter((pkg) => {
+    const pkgDate = new Date(pkg.package.date);
+    return pkgDate.setHours(0, 0, 0, 0) === today.getTime();
+  });
+
+  const count = packagesCreatedToday.length;
+  times.innerText = count;
 }
 
 async function logTime() {
-  const first = await getPackages();
+  const objects = await getPackages();
+  const [first] = objects.sort((a, b) =>
+    b.package.date.localeCompare(a.package.date),
+  );
   const date = new Date(first.package.date);
   const since = Date.now() - date.getTime();
 
@@ -37,7 +55,9 @@ function formatTime(seconds) {
   sec.innerText = paddedSeconds;
 }
 
+logPackageCount();
+
 setInterval(() => {
   logTime();
-  console.clear();
+  logPackageCount();
 }, 1000);
