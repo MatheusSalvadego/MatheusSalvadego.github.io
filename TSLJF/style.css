@@ -32,8 +32,8 @@ body {
   background: #fff;
   font-size: 7em;
   border-radius: 26px;
-  width: 3em;
-  height: 3em;
+  width: 2em;
+  height: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,6 +41,12 @@ body {
 }
 
 #times {
-  width: 10em;
+  width: 9em;
   grid-area: 1/1/2/4;
+}
+
+.record_div p span {
+  font-weight: bold;
+  font-size: 2em;
+  color: red;
 }
